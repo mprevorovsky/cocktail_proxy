@@ -1,20 +1,31 @@
 package com.example.cocktail_proxy
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import com.fasterxml.jackson.databind.JsonNode
+import jakarta.servlet.http.HttpServletRequest
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.RestTemplate
 
 
-val serverApiUrl = "https://www.thecocktaildb.com/api/json/v1/1"
+const val cocktailDbApiBaseUrl = "https://www.thecocktaildb.com/api/json/v1/1/"
 
 @RestController
-@RequestMapping
-class CocktailProxy {
+@RequestMapping("/proxy/")
+class CocktailDbProxyController {
 
     val restTemplate = RestTemplate()
-    @GetMapping("/random.php")
-    fun getProxy(): String? {
-        return restTemplate.getForObject("${serverApiUrl}/random.php", String::class.java)
+
+    @GetMapping("{path}")
+    @ResponseBody
+    fun getRequestProxy(@PathVariable path: String?, request: HttpServletRequest): JsonNode? {
+
+        val queryString : String? = request.queryString
+
+        val requestUrl = if (queryString.isNullOrBlank()) {
+            "${cocktailDbApiBaseUrl}${path}"
+        } else {
+            "${cocktailDbApiBaseUrl}${path}?${queryString}"
+        }
+
+        return restTemplate.getForObject(requestUrl, JsonNode::class.java)
     }
 }

@@ -1,0 +1,16 @@
+Funkční požadavky:
+
+Vyber si libovolné veřejné API a připoj aplikaci na toto api.
+Dále v aplikaci vytvoř REST API, které když zavoláš, tak aplikace provolá vybrané veřejné API a výsledek vrátí ve strukturované podobě.
+Aplikace se tedy bude chovat jako PROXY a bude jen převolávat další API.
+
+Moc jednoduché? Přidej unit testy.
+Moc jednoduché? Data modifikuj a vracej je nějak zpracovaná – například texty zapsané pozpátku.
+Moc jednoduché? Data si ulož do in-memory DB.
+Moc jednoduché? Zkombinuj více datových zdrojů, tedy více API a výsledek vracej agregovaný.
+Moc jednoduché? Přidej cache.
+
+Nefunkční požadavky:
+Aplikace by měla jít spustit na Windows/Linux PC.
+Zdrojový kód ukládej průběžně do Githubu a příslušně komentuj – klidně v češtině.
+Mysli na to, že kód po tobě bude někdo číst a bude jej zajímat výsledek i postup, případně omezení, které aplikace má.
