@@ -1,10 +1,10 @@
 package com.example.cocktail_proxy
 
-data class CocktailList(
-    val Drinks: Collection<Cocktail>
+data class DrinkList (
+    val drinks : Collection<Drink>
 )
 
-data class Cocktail (
+data class Drink (
     val idDrink : Int,
     val strDrink : String,
     val strCategory : String,

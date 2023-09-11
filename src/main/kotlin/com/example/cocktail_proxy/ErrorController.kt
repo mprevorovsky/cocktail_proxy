@@ -8,10 +8,14 @@ import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
 
 
-// Note:
-// When the target URL does not exist on the Cocktail DB server,
-// the server sends the 404 status code, together with an HTML document describing the error.
-// This then translates into the 500 status code returned by the Proxy app.
+/*
+Basic error controller to replace the default WhitePage Error.
+
+Note:
+When the target URL does not exist on the Cocktail DB server,
+the server sends the 404 status code, together with an HTML document describing the error.
+This then manifests as the 500 status code returned by the Proxy app.
+*/
 
 
 @RestController

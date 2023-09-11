@@ -20,9 +20,12 @@ class ProxyControllerTest {
     }
 }
 
-// Integration tests are badly needed. But not sure how to go about them (mocking? real requests over internet?).
-// Things to check:
-// - the correct Cocktail DB URL is composed and called
-// - the request type is GET
-// - the response status code is 200
-// - a JSON object is returned
+
+/*
+Integration tests are badly needed. But not sure how to go about them (mocking? real requests over internet?).
+Things to check:
+- the correct Cocktail DB URL is composed and called
+- the request type is GET
+- the response status code is 200
+- a JSON object is returned
+*/

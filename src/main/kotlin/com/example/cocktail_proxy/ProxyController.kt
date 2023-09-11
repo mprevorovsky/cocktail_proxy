@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.client.RestTemplate
 
 
-// All GET requests to the app /proxy/ endpoint are just redirected to the Cocktail DB.
-// The path and any query strings are extracted and passed on to the Cocktail DB API
+/*
+All GET requests to the app "/proxy/" endpoint are just redirected to the Cocktail DB.
+The path and any query strings are extracted and passed on to the Cocktail DB API.
+*/
 
 
-const val cocktailDbApiBaseUrl = "https://www.thecocktaildb.com/api/json/v1/1/"
+
 
 @RestController
 @RequestMapping("/proxy/")

@@ -10,10 +10,13 @@ import org.springframework.boot.runApplication
 // Data are returned as JSON node objects.
 
 
+const val cocktailDbApiBaseUrl: String = "https://www.thecocktaildb.com/api/json/v1/1/"
+const val cocktailDbApiRandomDrinkUrl: String = "https://www.thecocktaildb.com/api/json/v1/1/random.php"
+
 @SpringBootApplication
-class CocktailProxyApplication
+class CocktailDbProxyApplication
 
 fun main(args: Array<String>) {
-	runApplication<CocktailProxyApplication>(*args)
+	runApplication<CocktailDbProxyApplication>(*args)
 
 }
