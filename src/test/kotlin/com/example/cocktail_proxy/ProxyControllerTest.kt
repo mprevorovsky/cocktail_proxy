@@ -3,6 +3,7 @@ package com.example.cocktail_proxy
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
+
 class ProxyControllerTest {
 
     private val cocktailDbApiBaseUrl = "https://www.thecocktaildb.com/api/json/v1/1/"
@@ -13,7 +14,11 @@ class ProxyControllerTest {
         val controller = CocktailDbProxyController()
 
         val urlWithoutQueryString = controller.composeRequestUrl(baseUrl = cocktailDbApiBaseUrl, path = "random.php")
-        val urlWithQueryString = controller.composeRequestUrl(baseUrl = cocktailDbApiBaseUrl, path = "search.php", queryString = "s=Margarita")
+        val urlWithQueryString = controller.composeRequestUrl(
+            baseUrl = cocktailDbApiBaseUrl,
+            path = "search.php",
+            queryString = "s=Margarita"
+        )
 
         assertEquals(urlWithoutQueryString, "${cocktailDbApiBaseUrl}random.php")
         assertEquals(urlWithQueryString, "${cocktailDbApiBaseUrl}search.php?s=Margarita")

@@ -1,12 +1,12 @@
 package com.example.cocktail_proxy
 
-import com.fasterxml.jackson.databind.JsonNode
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.client.RestTemplate
+import java.io.IOException
 
 
 /*
@@ -15,20 +15,20 @@ The path and any query strings are extracted and passed on to the Cocktail DB AP
 */
 
 
-
-
 @RestController
 @RequestMapping("/proxy/")
-class CocktailDbProxyController {
-
-    private val restTemplate = RestTemplate()
+class CocktailDbProxyController(
+    val consumedApiBaseUrl: String = cocktailDbApiBaseUrl,
+    val restTemplate: RestTemplate = RestTemplate()
+    ) {
 
     @GetMapping("{path}")
-    fun performProxyGetRequest(@PathVariable path: String, request: HttpServletRequest): JsonNode? {
+    fun performProxyGetRequest(@PathVariable path: String, request: HttpServletRequest): CocktailDbRecord {
 
-        val requestUrl = composeRequestUrl(cocktailDbApiBaseUrl, path, request.queryString)
+        val requestUrl = composeRequestUrl(consumedApiBaseUrl, path, request.queryString)
 
-        return restTemplate.getForObject(requestUrl, JsonNode::class.java)
+        return restTemplate.getForObject(requestUrl, CocktailDbRecord::class.java)
+            ?: throw IOException("Something went wrong. Did the dog unplug the network cable again?")
     }
 
     internal fun composeRequestUrl(baseUrl: String, path: String, queryString: String? = null): String {

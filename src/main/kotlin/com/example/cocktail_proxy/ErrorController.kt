@@ -20,7 +20,7 @@ This then manifests as the 500 status code returned by the Proxy app.
 
 @RestController
 @RequestMapping
-class CustomErrorController : ErrorController {
+class CustomErrorController: ErrorController {
 
     @ResponseBody
     @GetMapping("/error")

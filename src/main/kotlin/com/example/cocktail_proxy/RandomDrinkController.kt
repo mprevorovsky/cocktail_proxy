@@ -8,16 +8,16 @@ import java.io.IOException
 
 @RestController
 @RequestMapping("/random_drink/")
-class RandomDrinkController {
+class RandomDrinkController(val consumedApiUrl: String = cocktailDbApiRandomDrinkUrl) {
 
     private val restTemplate = RestTemplate()
 
     @GetMapping
-    fun getRandomDrink() : Collection<Drink> {
+    fun getRandomDrink(): Drink {
 
-        val response =  restTemplate.getForEntity(cocktailDbApiRandomDrinkUrl, DrinkList::class.java)
-        return response.body?.drinks
-            ?: throw IOException("Could not fetch any drinks.")
+        val response = restTemplate.getForEntity(consumedApiUrl, CocktailDbRecord::class.java)
+        return response.body?.drinks?.first()
+            ?: throw IOException("Could not fetch any drinks. Have a snack instead...")
     }
 }
 

@@ -17,6 +17,6 @@ const val cocktailDbApiRandomDrinkUrl: String = "https://www.thecocktaildb.com/a
 class CocktailDbProxyApplication
 
 fun main(args: Array<String>) {
-	runApplication<CocktailDbProxyApplication>(*args)
+    runApplication<CocktailDbProxyApplication>(*args)
 
 }
