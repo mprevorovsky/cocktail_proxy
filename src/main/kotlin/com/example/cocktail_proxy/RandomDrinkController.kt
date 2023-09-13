@@ -8,9 +8,10 @@ import java.io.IOException
 
 @RestController
 @RequestMapping("/random_drink/")
-class RandomDrinkController(val consumedApiUrl: String = cocktailDbApiRandomDrinkUrl) {
-
-    private val restTemplate = RestTemplate()
+class RandomDrinkController(
+    val consumedApiUrl: String = cocktailDbApiRandomDrinkUrl,
+    val restTemplate: RestTemplate
+    ) {
 
     @GetMapping
     fun getRandomDrink(): Drink {

@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.client.RestTemplate
-import java.io.IOException
 
 
 /*
@@ -18,25 +17,17 @@ The path and any query strings are extracted and passed on to the Cocktail DB AP
 @RestController
 @RequestMapping("/proxy/")
 class CocktailDbProxyController(
-    val consumedApiBaseUrl: String = cocktailDbApiBaseUrl,
-    val restTemplate: RestTemplate = RestTemplate()
-    ) {
+    val restTemplate: RestTemplate,
+    val httpRequest: HttpServletRequest
+) {
 
     @GetMapping("{path}")
-    fun performProxyGetRequest(@PathVariable path: String, request: HttpServletRequest): CocktailDbRecord {
+    fun performProxyGetRequest(
+        @PathVariable path: String,
+    ): CocktailDbRecord {
 
-        val requestUrl = composeRequestUrl(consumedApiBaseUrl, path, request.queryString)
-
-        return restTemplate.getForObject(requestUrl, CocktailDbRecord::class.java)
-            ?: throw IOException("Something went wrong. Did the dog unplug the network cable again?")
-    }
-
-    internal fun composeRequestUrl(baseUrl: String, path: String, queryString: String? = null): String {
-        return if (!queryString.isNullOrBlank()) {
-            "${baseUrl}${path}?${queryString}"
-        } else {
-            "${baseUrl}${path}"
-        }
+        return ProxyService(restTemplate)
+            .proxyGetRequest(cocktailDbApiBaseUrl, path, httpRequest.queryString)
     }
 }
 
