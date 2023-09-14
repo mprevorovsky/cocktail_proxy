@@ -1,5 +1,8 @@
-package com.example.cocktail_proxy
+package com.example.cocktail_proxy.controller
 
+import com.example.cocktail_proxy.cocktailDbApiRandomDrinkUrl
+import com.example.cocktail_proxy.model.CocktailDbRecord
+import com.example.cocktail_proxy.model.Drink
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -11,7 +14,7 @@ import java.io.IOException
 class RandomDrinkController(
     val consumedApiUrl: String = cocktailDbApiRandomDrinkUrl,
     val restTemplate: RestTemplate
-    ) {
+) {
 
     @GetMapping
     fun getRandomDrink(): Drink {

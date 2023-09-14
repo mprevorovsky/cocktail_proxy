@@ -1,5 +1,6 @@
 package com.example.cocktail_proxy
 
+import com.example.cocktail_proxy.controller.CocktailDbProxyController
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

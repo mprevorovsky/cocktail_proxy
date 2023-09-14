@@ -1,6 +1,8 @@
-package com.example.cocktail_proxy
+package com.example.cocktail_proxy.datasource
 
-interface ProxyDataSource {
+import com.example.cocktail_proxy.model.CocktailDbRecord
+
+interface DataSource {
 
     fun proxyGetRequest(
         consumedApiBaseUrl: String,

@@ -1,5 +1,8 @@
-package com.example.cocktail_proxy
+package com.example.cocktail_proxy.controller
 
+import com.example.cocktail_proxy.cocktailDbApiBaseUrl
+import com.example.cocktail_proxy.model.CocktailDbRecord
+import com.example.cocktail_proxy.service.ProxyService
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -18,7 +21,8 @@ The path and any query strings are extracted and passed on to the Cocktail DB AP
 @RequestMapping("/proxy/")
 class CocktailDbProxyController(
     val restTemplate: RestTemplate,
-    val httpRequest: HttpServletRequest
+    val httpRequest: HttpServletRequest,
+    val service: ProxyService
 ) {
 
     @GetMapping("{path}")
@@ -26,8 +30,7 @@ class CocktailDbProxyController(
         @PathVariable path: String,
     ): CocktailDbRecord {
 
-        return ProxyService(restTemplate)
-            .proxyGetRequest(cocktailDbApiBaseUrl, path, httpRequest.queryString)
+        return service.proxyGetRequest(cocktailDbApiBaseUrl, path, httpRequest.queryString)
     }
 }
 

@@ -1,4 +1,4 @@
-package com.example.cocktail_proxy
+package com.example.cocktail_proxy.controller
 
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.boot.web.servlet.error.ErrorController

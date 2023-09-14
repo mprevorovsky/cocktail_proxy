@@ -1,16 +1,13 @@
-package com.example.cocktail_proxy
+package com.example.cocktail_proxy.model
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class CocktailDbRecord (
+data class CocktailDbRecord(
     val drinks: Collection<Drink>?,
     val ingredients: Collection<Ingredient>?
 )
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class Drink (
+data class Drink(
     val idDrink: Int,
     val strDrink: String?,
     val strDrinkAlternate: String?,
@@ -71,8 +68,7 @@ data class Drink (
     val dateModified: String?
 )
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class Ingredient (
+data class Ingredient(
     val idIngredient: Int,
     val strIngredient: String?,
     val strDescription: String?,

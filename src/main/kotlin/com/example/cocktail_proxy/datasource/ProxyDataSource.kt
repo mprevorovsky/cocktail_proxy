@@ -1,14 +1,14 @@
-package com.example.cocktail_proxy
+package com.example.cocktail_proxy.datasource
 
-import org.springframework.stereotype.Service
+import com.example.cocktail_proxy.model.CocktailDbRecord
+import org.springframework.stereotype.Repository
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import java.io.IOException
 
-@Service
-class ProxyService(
-    val restTemplate: RestTemplate
-): ProxyDataSource {
+@Repository
+class ProxyDataSource(val restTemplate: RestTemplate) : DataSource {
+
     override fun proxyGetRequest(
         consumedApiBaseUrl: String,
         consumedApiPath: String,
