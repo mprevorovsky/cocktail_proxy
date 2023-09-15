@@ -1,8 +1,8 @@
 package com.example.cocktail_proxy.controller
 
 import com.example.cocktail_proxy.cocktailDbApiRandomDrinkUrl
-import com.example.cocktail_proxy.model.AbbreviatedDrink
-import com.example.cocktail_proxy.model.AbbreviatedDrinkList
+import com.example.cocktail_proxy.model.CocktailDbRecord
+import com.example.cocktail_proxy.model.Drink
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -26,15 +26,15 @@ class RandomDrinkController(
 ) {
 
     @GetMapping
-    fun getRandomDrinkInfo(model: Model): AbbreviatedDrink {
+    fun getRandomDrinkInfo(model: Model): Drink {
 
         val response = restTemplate
-            .getForEntity(cocktailDbApiRandomDrinkUrl, AbbreviatedDrinkList::class.java)
+            .getForEntity(cocktailDbApiRandomDrinkUrl, CocktailDbRecord::class.java)
 
         val randomDrink = response.body?.drinks?.first()
             ?: throw IOException("Could not fetch any drinks. Have a snack instead...")
 
-        model.addAttribute("strDrink", randomDrink.strDrink.uppercase())
+        model.addAttribute("strDrink", randomDrink.strDrink?.uppercase())
         model.addAttribute("strInstructions", randomDrink.strInstructions)
         model.addAttribute("strDrinkThumb", randomDrink.strDrinkThumb)
 
