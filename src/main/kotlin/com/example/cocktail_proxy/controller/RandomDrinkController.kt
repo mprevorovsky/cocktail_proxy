@@ -16,7 +16,8 @@ A minimalistic controller for retrieving brief info on a random drink from
 www.thecocktaildb.com/api/json/v1/1/random.php
 and serving selected drink attributes as an HTML page using a Thymeleaf template.
 
-For simplicity, this endpoint does not implement any Service or Repository layers.
+For simplicity, this endpoint does not implement any Service or Repository layers,
+but yes, now the controller does too many different things...
 */
 
 @Controller
@@ -28,11 +29,12 @@ class RandomDrinkController(
     @GetMapping
     fun getRandomDrinkInfo(model: Model): Drink {
 
-        val response = restTemplate
+        val randomDrink = restTemplate
             .getForEntity(cocktailDbApiRandomDrinkUrl, CocktailDbRecord::class.java)
-
-        val randomDrink = response.body?.drinks?.first()
-            ?: throw IOException("Could not fetch any drinks. Have a snack instead...")
+            .body
+            ?.drinks
+            ?.first()
+                ?: throw IOException("Could not fetch any drinks. Have a snack instead...")
 
         model.addAttribute("strDrink", randomDrink.strDrink?.uppercase())
         model.addAttribute("strInstructions", randomDrink.strInstructions)
