@@ -9,7 +9,7 @@ data class CocktailDbRecord(
 
 data class Drink(
     val idDrink: Int,
-    val strDrink: String?,
+    var strDrink: String?,
     val strDrinkAlternate: String?,
     val strTags: String?,
     val strVideo: String?,
@@ -70,7 +70,7 @@ data class Drink(
 
 data class Ingredient(
     val idIngredient: Int,
-    val strIngredient: String?,
+    var strIngredient: String?,
     val strDescription: String?,
     val strType: String?,
     val strAlcohol: String?,

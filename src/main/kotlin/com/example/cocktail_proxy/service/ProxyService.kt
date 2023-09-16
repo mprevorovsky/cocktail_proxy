@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class ProxyService(
-    val dataSource: DataSource
+    private val dataSource: DataSource
 ) {
     fun proxyGetRequest(
         consumedApiBaseUrl: String,
@@ -14,6 +14,12 @@ class ProxyService(
         queryString: String?
     ): CocktailDbRecord {
 
-        return dataSource.proxyGetRequest(consumedApiBaseUrl, consumedApiPath, queryString)
+        val response = dataSource.proxyGetRequest(consumedApiBaseUrl, consumedApiPath, queryString)
+
+        // the following steps are just examples of introducing data transformation into the Service layer
+        response.drinks?.forEach { it.strDrink = it.strDrink?.uppercase() }
+        response.ingredients?.forEach { it.strIngredient = it.strIngredient?.uppercase() }
+
+        return response
     }
 }
