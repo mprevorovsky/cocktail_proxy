@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.web.client.RestTemplate
 
 
-class DataSourceTest {
+class ProxyDataSourceTest {
 
     private val restTemplate = RestTemplate()
     private val dataSource = ProxyDataSource(restTemplate)
@@ -16,15 +16,15 @@ class DataSourceTest {
         //given
         val baseUrl = "http://example.com/"
         val path = "filter.php"
-        val query = "i=2"
+        val queryString = "i=2"
 
         // when
         val uri1 = dataSource.buildRequestUri(baseUrl, path, null)
-        val uri2 = dataSource.buildRequestUri(baseUrl, path, query)
+        val uri2 = dataSource.buildRequestUri(baseUrl, path, queryString)
 
         // then
         assertThat(uri1).isEqualTo(baseUrl + path)
-        assertThat(uri2).isEqualTo(baseUrl + path + "?" + query)
+        assertThat(uri2).isEqualTo(baseUrl + path + "?" + queryString)
     }
 }
 
