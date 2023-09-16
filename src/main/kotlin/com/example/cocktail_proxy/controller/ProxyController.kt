@@ -23,8 +23,8 @@ modularity for potential future changes of the App logic.
 @RestController
 @RequestMapping("/proxy/")
 class CocktailDbProxyController(
-    val httpRequest: HttpServletRequest,
-    val service: ProxyService
+    private val httpRequest: HttpServletRequest,
+    private val service: ProxyService
 ) {
 
     @GetMapping("{path}")

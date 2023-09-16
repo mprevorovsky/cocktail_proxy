@@ -23,7 +23,7 @@ but yes, now the controller does too many different things...
 @Controller
 @RequestMapping("/random_drink/")
 class RandomDrinkController(
-    val restTemplate: RestTemplate,
+    private val restTemplate: RestTemplate,
 ) {
 
     @GetMapping

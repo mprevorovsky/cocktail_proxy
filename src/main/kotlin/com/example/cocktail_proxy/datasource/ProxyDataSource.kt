@@ -7,7 +7,9 @@ import org.springframework.web.util.UriComponentsBuilder
 import java.io.IOException
 
 @Repository
-class ProxyDataSource(val restTemplate: RestTemplate) : DataSource {
+class ProxyDataSource(
+    private val restTemplate: RestTemplate
+) : DataSource {
 
     override fun proxyGetRequest(
         consumedApiBaseUrl: String,
@@ -15,13 +17,23 @@ class ProxyDataSource(val restTemplate: RestTemplate) : DataSource {
         queryString: String?
     ): CocktailDbRecord {
 
-        val requestUrl = UriComponentsBuilder
+        val requestUri = buildRequestUri(consumedApiBaseUrl, consumedApiPath, queryString)
+
+        return restTemplate.getForObject(requestUri, CocktailDbRecord::class.java)
+            ?: throw IOException("Something went wrong. Did the dog unplug the network cable again?")
+    }
+
+
+    internal fun buildRequestUri(
+        consumedApiBaseUrl: String,
+        consumedApiPath: String,
+        queryString: String?
+    ): String {
+
+        return UriComponentsBuilder
             .fromHttpUrl(consumedApiBaseUrl + consumedApiPath)
             .query(queryString)
             .build()
             .toString()
-
-        return restTemplate.getForObject(requestUrl, CocktailDbRecord::class.java)
-            ?: throw IOException("Something went wrong. Did the dog unplug the network cable again?")
     }
 }
