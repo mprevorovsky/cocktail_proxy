@@ -20,7 +20,7 @@ class ProxyDataSource(
         val requestUri = buildRequestUri(consumedApiBaseUrl, consumedApiPath, queryString)
 
         return restTemplate.getForObject(requestUri, CocktailDbRecord::class.java)
-            ?: throw IOException("Something went wrong. Did the dog unplug the network cable again?")
+            ?: throw IOException("400 Bad Request: No data could be read from $requestUri")
     }
 
 

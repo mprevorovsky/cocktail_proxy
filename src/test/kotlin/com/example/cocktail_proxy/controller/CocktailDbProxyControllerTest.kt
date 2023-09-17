@@ -17,10 +17,17 @@ class CocktailDbProxyControllerTest {
     lateinit var mockMvc: MockMvc
 
     @Test
-    fun `should return NotFound http status`() {
+    fun `should return NOT_FOUND http status`() {
         // when/then
-        mockMvc.get("/proxy/")
+        mockMvc.get("/proxy/search.ph")
             .andExpect { status { isNotFound() } }
+    }
+
+    @Test
+    fun `should return BAD_REQUEST http status`() {
+        // when/then
+        mockMvc.get("/proxy/search.php") // query string is expected but missing for this remote endpoint
+            .andExpect { status { isBadRequest() } }
     }
 
     @Test
@@ -30,9 +37,9 @@ class CocktailDbProxyControllerTest {
             .andExpect {
                 status { isOk() }
                 content { contentType(MediaType.APPLICATION_JSON) }
-                jsonPath("drinks.[0].idDrink") { isNumber() }
-                jsonPath("drinks.[0].strDrink") { isString() }
-                jsonPath("ingredients") { isEmpty() }
+                jsonPath("$.drinks.[0].idDrink") { isNumber() }
+                jsonPath("$.drinks.[0].strDrink") { isString() }
+                jsonPath("$.ingredients") { isEmpty() }
             }
     }
 
@@ -43,9 +50,9 @@ class CocktailDbProxyControllerTest {
             .andExpect {
                 status { isOk() }
                 content { contentType(MediaType.APPLICATION_JSON) }
-                jsonPath("drinks") { isEmpty() }
-                jsonPath("ingredients.[0].idIngredient") { isNumber() }
-                jsonPath("ingredients.[0].strIngredient") { value("Vodka".uppercase()) }
+                jsonPath("$.drinks") { isEmpty() }
+                jsonPath("$.ingredients.[0].idIngredient") { isNumber() }
+                jsonPath("$.ingredients.[0].strIngredient") { value("Vodka".uppercase()) }
             }
     }
 }

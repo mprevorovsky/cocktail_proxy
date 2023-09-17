@@ -14,3 +14,12 @@ Nefunkční požadavky:
 Aplikace by měla jít spustit na Windows/Linux PC.
 Zdrojový kód ukládej průběžně do Githubu a příslušně komentuj – klidně v češtině.
 Mysli na to, že kód po tobě bude někdo číst a bude jej zajímat výsledek i postup, případně omezení, které aplikace má.
+
+
+TODO
+- error handling
+- DB
+- combine with another API (name days?)
+- cache
+- final documentation
+- use Spring httpRequest object in Tests?

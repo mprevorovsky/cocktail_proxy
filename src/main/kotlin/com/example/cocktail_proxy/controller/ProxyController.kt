@@ -4,10 +4,11 @@ import com.example.cocktail_proxy.cocktailDbApiBaseUrl
 import com.example.cocktail_proxy.model.CocktailDbRecord
 import com.example.cocktail_proxy.service.ProxyService
 import jakarta.servlet.http.HttpServletRequest
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.client.HttpClientErrorException
+import java.io.IOException
 
 
 /*
@@ -26,6 +27,16 @@ class CocktailDbProxyController(
     private val httpRequest: HttpServletRequest,
     private val service: ProxyService
 ) {
+
+    @ExceptionHandler(HttpClientErrorException::class)
+    fun uriNotFound(e: HttpClientErrorException): ResponseEntity<String> =
+        ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+
+
+    @ExceptionHandler(IOException::class)
+    fun noDataCouldBeReadFromUri(e: IOException): ResponseEntity<String> =
+        ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
+
 
     @GetMapping("{path}")
     fun performProxyGetRequest(
