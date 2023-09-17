@@ -8,6 +8,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.client.RestTemplate
+import java.io.IOException
 
 
 /*
@@ -26,7 +27,7 @@ class RandomDrinkController(
 ) {
 
     @GetMapping
-    fun getRandomDrinkInfo(model: Model): Drink? {
+    fun getRandomDrinkInfo(model: Model): Drink {
 
         val randomDrink = restTemplate
             .getForEntity(cocktailDbApiRandomDrinkUrl, CocktailDbRecord::class.java)
@@ -39,7 +40,10 @@ class RandomDrinkController(
         model.addAttribute("strDrinkThumb", randomDrink?.strDrinkThumb)
 
         return randomDrink
-        // TODO test of this class (mainly the returned values/structure
+            ?: throw IOException("Could not retrieve a random drink from $cocktailDbApiRandomDrinkUrl")
+
+    // TODO test of this class (mainly the returned values/structure)
+        // TODO  error handling
     }
 }
 

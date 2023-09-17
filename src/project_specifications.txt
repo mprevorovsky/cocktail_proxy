@@ -17,9 +17,7 @@ Mysli na to, že kód po tobě bude někdo číst a bude jej zajímat výsledek 
 
 
 TODO
-- error handling
 - DB
 - combine with another API (name days?)
 - cache
 - final documentation
-- use Spring httpRequest object in Tests?
