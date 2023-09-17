@@ -9,7 +9,9 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
+
 class ProxyServiceTest {
+
     private val dataSource: ProxyDataSource = mockk()
     private val proxyService = ProxyService(dataSource)
 

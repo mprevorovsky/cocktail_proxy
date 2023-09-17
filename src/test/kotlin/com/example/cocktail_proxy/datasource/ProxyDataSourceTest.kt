@@ -12,7 +12,6 @@ class ProxyDataSourceTest {
 
     @Test
     fun `should properly compose requested URI from base, path and query`() {
-
         //given
         val baseUrl = "http://example.com/"
         val path = "filter.php"
