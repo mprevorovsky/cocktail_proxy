@@ -1,6 +1,5 @@
-package com.example.cocktail_proxy
+package com.example.cocktail_proxy.datasource
 
-import com.example.cocktail_proxy.datasource.ProxyDataSource
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.web.client.RestTemplate
@@ -13,6 +12,7 @@ class ProxyDataSourceTest {
 
     @Test
     fun `should properly compose requested URI from base, path and query`() {
+
         //given
         val baseUrl = "http://example.com/"
         val path = "filter.php"
@@ -28,10 +28,11 @@ class ProxyDataSourceTest {
     }
 }
 
-
 /*
-Integration tests are badly needed. But not sure how to go about them (mocking? real requests over internet?).
-Things to check:
-- the request type is GET
-- the response status code is 200
+It would be nice to also test if the actual http request used the correct
+- method (GET)
+- URI
+etc.
+But I do not know how to do it.
+(I tried using a HttpServletRequest object injected by Spring.)
 */
