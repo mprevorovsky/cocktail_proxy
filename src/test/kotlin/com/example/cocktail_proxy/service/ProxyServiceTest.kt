@@ -1,24 +1,32 @@
 package com.example.cocktail_proxy.service
 
+import com.example.cocktail_proxy.datasource.DrinksRepository
 import com.example.cocktail_proxy.datasource.ProxyDataSource
 import com.example.cocktail_proxy.model.CocktailDbRecord
+import com.example.cocktail_proxy.model.Drink
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.annotation.DirtiesContext
 
 
-class ProxyServiceTest {
+@SpringBootTest
+class ProxyServiceTest() {
 
     private val dataSource: ProxyDataSource = mockk()
-    private val proxyService = ProxyService(dataSource)
-
+    @Autowired
+    lateinit var drinksRepository: DrinksRepository
 
     @Test
     fun `should call its DataSource once to retrieve cocktail data`() {
         // given
+        val proxyService = ProxyService(dataSource = dataSource, drinksRepository = drinksRepository)
+
         val baseUrl = ""
         val path = ""
         val queryString = null
@@ -33,9 +41,12 @@ class ProxyServiceTest {
         verify(exactly = 1) { dataSource.proxyGetRequest(baseUrl, path, queryString) }
     }
 
+
     @Test
     fun `should return uppercase names of drinks and ingredients`() {
         // given
+        val proxyService = ProxyService(dataSource = dataSource, drinksRepository = drinksRepository)
+
         val baseUrl = ""
         val path = ""
         val queryString = null
@@ -50,7 +61,30 @@ class ProxyServiceTest {
         val response = proxyService.proxyGetRequest(baseUrl, path, queryString)
 
         // then
-        assertThat(response.drinks).allMatch { it.strDrink == it.strDrink?.uppercase() }
-        assertThat(response.ingredients).allMatch { it.strIngredient == it.strIngredient?.uppercase() }
+        assertThat(response.drinks).allMatch { it.strDrink == it.strDrink.uppercase() }
+        assertThat(response.ingredients).allMatch { it.strIngredient == it.strIngredient.uppercase() }
+    }
+
+
+    @Test
+    @DirtiesContext
+    fun `should not save duplicate drinks to DB`() {
+        // given
+        val proxyService = ProxyService(dataSource = dataSource, drinksRepository = drinksRepository)
+
+        val mapper = jacksonObjectMapper()
+        val drink1 = mapper.readValue("""{"idDrink":1,"strDrink":"Drink1"}""", Drink::class.java)
+        val drink2 = mapper.readValue("""{"idDrink":2,"strDrink":"Drink2"}""", Drink::class.java)
+
+        // when
+        proxyService.saveDrinkDataIfNotExist(listOf(drink1, drink2, drink1))
+
+        // then
+        assertThat(drinksRepository.findAll())
+            .hasSize(2)
+        assertThat(drinksRepository.findAll().first().strDrink)
+            .isEqualTo(drink1.strDrink)
+        assertThat(drinksRepository.findAll().elementAt(1).strDrink)
+            .isEqualTo(drink2.strDrink)
     }
 }

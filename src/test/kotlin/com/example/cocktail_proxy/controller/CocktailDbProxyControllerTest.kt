@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.get
 class CocktailDbProxyControllerTest {
 
     @Autowired
-    lateinit var mockMvc: MockMvc
+    private lateinit var mockMvc: MockMvc
 
     @Test
     fun `should return NOT_FOUND http status`() {
@@ -23,12 +23,14 @@ class CocktailDbProxyControllerTest {
             .andExpect { status { isNotFound() } }
     }
 
+
     @Test
     fun `should return BAD_REQUEST http status`() {
         // when/then
         mockMvc.get("/proxy/search.php") // query string is expected but missing for this remote endpoint
             .andExpect { status { isBadRequest() } }
     }
+
 
     @Test
     fun `should return random drink data mapped to CocktailDbRecord`() {
@@ -42,6 +44,7 @@ class CocktailDbProxyControllerTest {
                 jsonPath("$.ingredients") { isEmpty() }
             }
     }
+
 
     @Test
     fun `should return ingredient data mapped to CocktailDbRecord`() {

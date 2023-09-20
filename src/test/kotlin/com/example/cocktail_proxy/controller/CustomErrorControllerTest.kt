@@ -11,7 +11,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 class CustomErrorControllerTest {
 
     @Autowired
-    lateinit var restTemplate: TestRestTemplate
+    private lateinit var restTemplate: TestRestTemplate
 
     @Test
     fun `should call trigger error message from CustomErrorController`() {

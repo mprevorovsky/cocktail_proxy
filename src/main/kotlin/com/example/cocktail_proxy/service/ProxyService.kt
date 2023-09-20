@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class ProxyService(
     private val dataSource: DataSource,
-    private val drinkRepository: DrinksRepository
+    private val drinksRepository: DrinksRepository
 ) {
     fun proxyGetRequest(
         consumedApiBaseUrl: String,
@@ -21,7 +21,7 @@ class ProxyService(
 
         // if any drink data is returned, each *new* drink is saved to an in-memory database
         if (!response.drinks.isNullOrEmpty()) {
-            saveDrinkData(response.drinks)
+            saveDrinkDataIfNotExist(response.drinks)
         }
 
         // to demonstrates the possibilities of data transformation in the Service layer
@@ -31,7 +31,7 @@ class ProxyService(
     }
 
 
-    fun makeNamesUppercase(responseToProcess: CocktailDbRecord): CocktailDbRecord {
+    internal fun makeNamesUppercase(responseToProcess: CocktailDbRecord): CocktailDbRecord {
         responseToProcess.drinks?.forEach { it.strDrink = it.strDrink.uppercase() }
         responseToProcess.ingredients?.forEach { it.strIngredient = it.strIngredient.uppercase() }
 
@@ -39,10 +39,10 @@ class ProxyService(
     }
 
 
-    fun saveDrinkData(drinkData: Collection<Drink>) {
+    internal fun saveDrinkDataIfNotExist(drinkData: Collection<Drink>) {
         drinkData.forEach {
-            if (!drinkRepository.existsByIdDrink(it.idDrink))
-                drinkRepository.save(it.toDrinkJpaCompatible())
+            if (!drinksRepository.existsByIdDrink(it.idDrink))
+                drinksRepository.save(it.toDrinkJpaCompatible())
         }
     }
 }

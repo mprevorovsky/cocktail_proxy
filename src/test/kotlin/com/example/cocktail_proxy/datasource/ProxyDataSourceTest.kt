@@ -26,12 +26,3 @@ class ProxyDataSourceTest {
         assertThat(uri2).isEqualTo(baseUrl + path + "?" + queryString)
     }
 }
-
-/*
-It would be nice to also test if the actual http request used the correct
-- method (GET)
-- URI
-etc.
-But I do not know how to do it.
-(I tried using a HttpServletRequest object injected by Spring.)
-*/
