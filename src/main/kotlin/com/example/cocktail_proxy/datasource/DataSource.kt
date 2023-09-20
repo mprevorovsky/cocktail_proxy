@@ -4,7 +4,7 @@ import com.example.cocktail_proxy.model.CocktailDbRecord
 
 interface DataSource {
 
-    fun proxyGetRequest(
+    fun performProxyGetRequest(
         consumedApiBaseUrl: String,
         consumedApiPath: String,
         queryString: String?

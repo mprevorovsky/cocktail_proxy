@@ -11,17 +11,17 @@ class ProxyService(
     private val dataSource: DataSource,
     private val drinksRepository: DrinksRepository
 ) {
-    fun proxyGetRequest(
+    fun performProxyGetRequest(
         consumedApiBaseUrl: String,
         consumedApiPath: String,
         queryString: String?
     ): CocktailDbRecord {
 
-        val response = dataSource.proxyGetRequest(consumedApiBaseUrl, consumedApiPath, queryString)
+        val response = dataSource.performProxyGetRequest(consumedApiBaseUrl, consumedApiPath, queryString)
 
         // if any drink data is returned, each *new* drink is saved to an in-memory database
         if (!response.drinks.isNullOrEmpty()) {
-            saveDrinkDataIfNotExist(response.drinks)
+            saveDrinkDataIfNotExists(response.drinks)
         }
 
         // to demonstrates the possibilities of data transformation in the Service layer
@@ -39,7 +39,7 @@ class ProxyService(
     }
 
 
-    internal fun saveDrinkDataIfNotExist(drinkData: Collection<Drink>) {
+    internal fun saveDrinkDataIfNotExists(drinkData: Collection<Drink>) {
         drinkData.forEach {
             if (!drinksRepository.existsByIdDrink(it.idDrink))
                 drinksRepository.save(it.toDrinkJpaCompatible())

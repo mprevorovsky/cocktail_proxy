@@ -31,14 +31,14 @@ class ProxyServiceTest() {
         val path = ""
         val queryString = null
 
-        every { dataSource.proxyGetRequest(baseUrl, path, queryString) } returns
+        every { dataSource.performProxyGetRequest(baseUrl, path, queryString) } returns
                 CocktailDbRecord(drinks = null, ingredients = null)
 
         // when
-        proxyService.proxyGetRequest(baseUrl, path, queryString)
+        proxyService.performProxyGetRequest(baseUrl, path, queryString)
 
         // then
-        verify(exactly = 1) { dataSource.proxyGetRequest(baseUrl, path, queryString) }
+        verify(exactly = 1) { dataSource.performProxyGetRequest(baseUrl, path, queryString) }
     }
 
 
@@ -55,10 +55,10 @@ class ProxyServiceTest() {
         val mockData = mapper.readValue("""{"drinks":[{"strDrink":"Drink"}],"ingredients":[{"strIngredient":"Vodka"}]}""",
             CocktailDbRecord::class.java)
 
-        every { dataSource.proxyGetRequest(baseUrl, path, queryString) } returns mockData
+        every { dataSource.performProxyGetRequest(baseUrl, path, queryString) } returns mockData
 
         // when
-        val response = proxyService.proxyGetRequest(baseUrl, path, queryString)
+        val response = proxyService.performProxyGetRequest(baseUrl, path, queryString)
 
         // then
         assertThat(response.drinks).allMatch { it.strDrink == it.strDrink.uppercase() }
@@ -77,7 +77,7 @@ class ProxyServiceTest() {
         val drink2 = mapper.readValue("""{"idDrink":2,"strDrink":"Drink2"}""", Drink::class.java)
 
         // when
-        proxyService.saveDrinkDataIfNotExist(listOf(drink1, drink2, drink1))
+        proxyService.saveDrinkDataIfNotExists(listOf(drink1, drink2, drink1))
 
         // then
         assertThat(drinksRepository.findAll())

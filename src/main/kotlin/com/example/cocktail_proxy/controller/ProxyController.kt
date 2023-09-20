@@ -29,12 +29,12 @@ class CocktailDbProxyController(
 ) {
 
     @ExceptionHandler(HttpClientErrorException::class)
-    fun uriNotFound(e: HttpClientErrorException): ResponseEntity<String> =
+    fun handleUriNotFound(e: HttpClientErrorException): ResponseEntity<String> =
         ResponseEntity(e.message, HttpStatus.NOT_FOUND)
 
 
     @ExceptionHandler(IOException::class)
-    fun noDataCouldBeReadFromUri(e: IOException): ResponseEntity<String> =
+    fun handleNoDataCouldBeReadFromUri(e: IOException): ResponseEntity<String> =
         ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
 
 
@@ -43,7 +43,7 @@ class CocktailDbProxyController(
         @PathVariable path: String,
     ): CocktailDbRecord {
 
-        return service.proxyGetRequest(cocktailDbApiBaseUrl, path, httpRequest.queryString)
+        return service.performProxyGetRequest(cocktailDbApiBaseUrl, path, httpRequest.queryString)
     }
 }
 

@@ -11,7 +11,7 @@ class ProxyDataSource(
     private val restTemplate: RestTemplate
 ) : DataSource {
 
-    override fun proxyGetRequest(
+    override fun performProxyGetRequest(
         consumedApiBaseUrl: String,
         consumedApiPath: String,
         queryString: String?
