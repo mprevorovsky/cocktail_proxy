@@ -2,14 +2,16 @@ package com.example.cocktail_proxy.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
+
 data class CocktailDbRecord(
     val drinks: Collection<Drink>?,
     val ingredients: Collection<Ingredient>?
 )
 
+
 data class Drink(
     val idDrink: Int,
-    var strDrink: String?,
+    var strDrink: String,
     val strDrinkAlternate: String?,
     val strTags: String?,
     val strVideo: String?,
@@ -66,11 +68,19 @@ data class Drink(
     val strImageAttribution: String?,
     val strCreativeCommonsConfirmed: String?,
     val dateModified: String?
-)
+) {
+
+    fun toDrinkJpaCompatible() = DrinkJpaCompatible(
+        idDrink = idDrink,
+        strDrink = strDrink
+    )
+
+}
+
 
 data class Ingredient(
     val idIngredient: Int,
-    var strIngredient: String?,
+    var strIngredient: String,
     val strDescription: String?,
     val strType: String?,
     val strAlcohol: String?,
