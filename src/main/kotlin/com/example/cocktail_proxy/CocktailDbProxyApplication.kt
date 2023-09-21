@@ -21,13 +21,15 @@ The application provides 3 endpoints:
    When new drink data are retrieved, drink id (idDrink) and name (strDrink) are saved to a local in-memory
    database and can be retrieved from the "/local_db/ endpoint".
 2) "/random_drink/" - calls the "random.php" path on the CocktailDB API to retrieve data for a random drink,
-   presented as a simple webpage (Thymeleaf template).
+   and then retrieves the currently celebrated name from "https://svatkyapi.cz/api/day".
+   The results are presented as a simple webpage (Thymeleaf template).
    (no data is saved to the local in-memory DB)
 3) "/local_db/" - retrieves all drink records stored in the local in-memory DB in the JSON format.
 */
 
 const val cocktailDbApiBaseUrl: String = "https://www.thecocktaildb.com/api/json/v1/1/"
 const val cocktailDbApiRandomDrinkUrl: String = "https://www.thecocktaildb.com/api/json/v1/1/random.php"
+const val nameDaysApiUrl: String = "https://svatkyapi.cz/api/day"
 
 
 @SpringBootApplication

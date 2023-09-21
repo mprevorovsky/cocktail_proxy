@@ -3,6 +3,8 @@ package com.example.cocktail_proxy.controller
 import com.example.cocktail_proxy.cocktailDbApiRandomDrinkUrl
 import com.example.cocktail_proxy.model.CocktailDbRecord
 import com.example.cocktail_proxy.model.Drink
+import com.example.cocktail_proxy.model.Nameday
+import com.example.cocktail_proxy.nameDaysApiUrl
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -35,9 +37,15 @@ class RandomDrinkController(
             ?.drinks
             ?.first()
 
+        val nameCelebratedToday = restTemplate
+            .getForEntity(nameDaysApiUrl, Nameday::class.java)
+            .body
+            ?.name
+
         model.addAttribute("strDrink", randomDrink?.strDrink)
         model.addAttribute("strInstructions", randomDrink?.strInstructions)
         model.addAttribute("strDrinkThumb", randomDrink?.strDrinkThumb)
+        model.addAttribute("namedayPhrase", nameCelebratedToday + " celebrates today... Cheers!")
 
         return randomDrink
             ?: throw IOException("Could not retrieve a random drink from $cocktailDbApiRandomDrinkUrl")
