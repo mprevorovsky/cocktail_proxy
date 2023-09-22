@@ -1,6 +1,6 @@
-## *NOTE: This is learning/demo project*
-
-# The CocktailDb proxy application is linked to two REST APIs:
+## <font color="red">*NOTE: This is a learning/demo project*</font>
+<br>
+## The CocktailDb proxy application is linked to two REST APIs:
 
 1) the CocktailDB API (documentation at https://www.thecocktaildb.com/api.php) - a database of drinks.
 
