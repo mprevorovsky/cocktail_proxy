@@ -1,6 +1,7 @@
 package com.example.cocktail_proxy.datasource
 
 import com.example.cocktail_proxy.model.CocktailDbRecord
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Repository
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
@@ -11,6 +12,7 @@ class ProxyDataSource(
     private val restTemplate: RestTemplate
 ) : DataSource {
 
+    @Cacheable("cocktailDb", condition = "#consumedApiPath!='random.php'")
     override fun performProxyGetRequest(
         consumedApiBaseUrl: String,
         consumedApiPath: String,

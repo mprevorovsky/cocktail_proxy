@@ -2,6 +2,7 @@ package com.example.cocktail_proxy
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.cache.annotation.EnableCaching
 
 /*
 The application is linked to the CocktailDB REST API.
@@ -33,6 +34,7 @@ const val nameDaysApiUrl: String = "https://svatkyapi.cz/api/day"
 
 
 @SpringBootApplication
+@EnableCaching
 class CocktailDbProxyApplication
 
 
