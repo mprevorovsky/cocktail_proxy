@@ -1,3 +1,9 @@
+/*
+Controller for the endpoint "/local_db/"
+
+Returns all currently available drink data from the local in-memory DB as JSON.
+ */
+
 package com.example.cocktail_proxy.controller
 
 import com.example.cocktail_proxy.datasource.DrinksRepository

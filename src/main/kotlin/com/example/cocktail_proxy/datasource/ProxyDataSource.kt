@@ -1,3 +1,9 @@
+/*
+Repository layer for accessing the CocktailDB API.
+
+URI elements supplied by upstream layers are turned into a final URI and a GET request is performed.
+ */
+
 package com.example.cocktail_proxy.datasource
 
 import com.example.cocktail_proxy.model.CocktailDbRecord
@@ -12,6 +18,7 @@ class ProxyDataSource(
     private val restTemplate: RestTemplate
 ) : DataSource {
 
+    // Requests to the "random.php" path are not cached to preserve the random character of the responses.
     @Cacheable("cocktailDb", condition = "#consumedApiPath!='random.php'")
     override fun performProxyGetRequest(
         consumedApiBaseUrl: String,
@@ -26,6 +33,7 @@ class ProxyDataSource(
     }
 
 
+    // Builds URI from base URL, path and an optional query string.
     internal fun buildRequestUri(
         consumedApiBaseUrl: String,
         consumedApiPath: String,

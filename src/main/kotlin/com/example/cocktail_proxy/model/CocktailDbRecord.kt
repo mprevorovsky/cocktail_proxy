@@ -1,14 +1,25 @@
+/*
+Data Transfer Object classes used for parsing the JSON responses from CocktailDB API.
+
+The CocktailDB API returns either some type of Drink record (minimal with just a few attributes, or
+extensive with all attributes) or an Ingredient record. To simplify the implementation of the proxy
+functionality, all retrieved JSON data are mapped to a common data structure (CocktailDbRecord class).
+ */
+
+
 package com.example.cocktail_proxy.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
 
+// Universal data transfer object class for parsing JSON data obtained from the CocktailDB API.
 data class CocktailDbRecord(
     val drinks: Collection<Drink>?,
     val ingredients: Collection<Ingredient>?
 )
 
 
+// Extensive data transfer object class for parsing drink-related JSON data obtained from the CocktailDB API.
 data class Drink(
     val idDrink: Int,
     var strDrink: String,
@@ -70,6 +81,7 @@ data class Drink(
     val dateModified: String?
 ) {
 
+    // Convert the Drink object into a DrinkJpaCompatible object.
     fun toDrinkJpaCompatible() = DrinkJpaCompatible(
         idDrink = idDrink,
         strDrink = strDrink
@@ -78,6 +90,7 @@ data class Drink(
 }
 
 
+// Data transfer object class for parsing ingredient-related JSON data obtained from the CocktailDB API.
 data class Ingredient(
     val idIngredient: Int,
     var strIngredient: String,

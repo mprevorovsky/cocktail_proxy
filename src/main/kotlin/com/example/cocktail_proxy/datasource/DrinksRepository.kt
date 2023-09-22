@@ -1,3 +1,9 @@
+/*
+Interface defining a CRUD repository.
+
+Intended to manipulate the local in-memory DB with drink data.
+ */
+
 package com.example.cocktail_proxy.datasource
 
 import com.example.cocktail_proxy.model.DrinkJpaCompatible

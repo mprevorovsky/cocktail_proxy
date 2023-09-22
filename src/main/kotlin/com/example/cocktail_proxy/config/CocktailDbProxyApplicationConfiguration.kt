@@ -1,3 +1,7 @@
+/*
+Setup of beans required by the application.
+ */
+
 package com.example.cocktail_proxy.config
 
 import org.springframework.boot.web.client.RestTemplateBuilder
