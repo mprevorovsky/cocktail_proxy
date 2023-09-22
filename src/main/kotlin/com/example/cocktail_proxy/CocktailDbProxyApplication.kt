@@ -25,14 +25,14 @@ The application provides 3 endpoints:
    All requests, except for the 'random.php' path, are cached.
 
    NOTE: This single-endpoint solution simplified the implementation of the proxy a lot, but it could become
-   limiting if future extension of the application are required.
+   limiting if future extensions of the application are required.
 
 2) "/random_drink/" - calls the "random.php" path on the CocktailDB API to retrieve data for a random drink,
    and then retrieves the currently celebrated name from Svátky API.
 
    The results are presented as a simple webpage (Thymeleaf template).
 
-   NOTE: no data is saved to the local in-memory DB when this endpoint is accessed.
+   NOTE: no data are saved to the local in-memory DB when this endpoint is accessed.
 
 3) "/local_db/" - retrieves all drink records stored in the local in-memory H2 database.
 */
