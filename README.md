@@ -1,4 +1,4 @@
-## <font color="red">*NOTE: This is a learning/demo project*</font>
+## *NOTE: This is a learning/demo project*
 
 ## The CocktailDb proxy application is linked to two REST APIs:
 
