@@ -19,9 +19,9 @@
    Names of drinks and/or ingredients are turned to UPPERCASE as a demonstration of data processing.
 
    When *new* drink data are retrieved, drink id (idDrink) and name (strDrink) are saved to a local in-memory
-   database and can be retrieved from the "/local_db/ endpoint".
+   database and can be retrieved from the "/local_db/" endpoint.
 
-   All requests, except for the 'random.php' path, are cached.
+   All requests, except for the "random.php" path, are cached.
 
    *NOTE: This single-endpoint solution simplified the implementation of the proxy a lot, but it could become
    limiting if future extensions of the application are required.*
