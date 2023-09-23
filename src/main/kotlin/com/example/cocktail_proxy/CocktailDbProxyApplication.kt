@@ -13,7 +13,7 @@ The application provides 3 endpoints:
    as JSON data.
 
    The free public part of the CocktailDB API only provides GET endpoints, which all retrieve information
-   either on drinks or on ingredients in some form.
+   on drinks and/or ingredients in some form.
    For simplicity, all JSON content returned from the remote server is mapped onto one common data structure
    (CocktailDbRecord class), and returned by the application.
 
