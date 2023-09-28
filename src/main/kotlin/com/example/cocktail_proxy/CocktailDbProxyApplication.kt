@@ -7,7 +7,7 @@ The application is linked to two REST APIs:
 2) Svátky API (documentation at https://svatkyapi.cz/) - a nameday database.
 
 
-The application provides 3 endpoints:
+The application provides 4 endpoints:
 =====================================
 1) "/proxy" - redirects *all* calls (all paths and queries) to the remote CocktailDB API and return the results
    as JSON data.
@@ -37,6 +37,13 @@ The application provides 3 endpoints:
    NOTE: no data are saved to the local in-memory DB when this endpoint is accessed.
 
 3) "/local-db" - retrieves all drink records stored in the local in-memory H2 database.
+
+4) "/drink-of-the-day" - retrieves the drink associated with a supplied date from the local in-memory DB as JSON.
+
+    If no such record exists yet, a random drink is fetched from www.thecocktaildb.com/api/json/v1/1/random.php,
+    associated with the date, saved to the local in-memory DB and returned as JSON.
+
+    EXAMPLE USE: "/drink-of-the-day/2023/09/13"
 */
 
 

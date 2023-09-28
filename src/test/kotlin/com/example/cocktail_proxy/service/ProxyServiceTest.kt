@@ -25,7 +25,7 @@ class ProxyServiceTest() {
     @Test
     fun `should call its DataSource once to retrieve cocktail data`() {
         // given
-        val proxyService = ProxyService(dataSource = dataSource, drinksRepository = drinksRepository)
+        val proxyService = ProxyService(dataSource = dataSource, drinksLocalRepository = drinksRepository)
 
         val baseUrl = ""
         val path = ""
@@ -45,7 +45,7 @@ class ProxyServiceTest() {
     @Test
     fun `should return uppercase names of drinks and ingredients`() {
         // given
-        val proxyService = ProxyService(dataSource = dataSource, drinksRepository = drinksRepository)
+        val proxyService = ProxyService(dataSource = dataSource, drinksLocalRepository = drinksRepository)
 
         val baseUrl = ""
         val path = ""
@@ -70,7 +70,7 @@ class ProxyServiceTest() {
     @DirtiesContext
     fun `should not save duplicate drinks to DB`() {
         // given
-        val proxyService = ProxyService(dataSource = dataSource, drinksRepository = drinksRepository)
+        val proxyService = ProxyService(dataSource = dataSource, drinksLocalRepository = drinksRepository)
 
         val mapper = jacksonObjectMapper()
         val drink1 = mapper.readValue("""{"idDrink":1,"strDrink":"Drink1"}""", Drink::class.java)

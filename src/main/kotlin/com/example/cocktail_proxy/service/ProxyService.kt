@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service
 @Service
 class ProxyService(
     private val dataSource: DataSource,
-    private val drinksRepository: DrinksRepository
+    private val drinksLocalRepository: DrinksRepository
 ) {
     fun performProxyGetRequest(
         consumedApiBaseUrl: String,
@@ -57,8 +57,8 @@ class ProxyService(
     // The "existsByIdDrink" function is auto-implemented by Spring.
     internal fun saveDrinkDataIfNotExists(drinkData: Collection<Drink>) {
         drinkData.forEach {
-            if (!drinksRepository.existsByIdDrink(it.idDrink))
-                drinksRepository.save(it.toDrinkJpaCompatible())
+            if (!drinksLocalRepository.existsByIdDrink(it.idDrink))
+                drinksLocalRepository.save(it.toDrinkJpaCompatible())
         }
     }
 }
