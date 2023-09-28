@@ -27,6 +27,17 @@ import org.springframework.web.client.RestTemplate
 import java.io.IOException
 
 
+fun getRandomDrink(restTemplate: RestTemplate): Drink {
+    return restTemplate
+        .getForEntity(cocktailDbApiRandomDrinkUrl, CocktailDbRecord::class.java)
+        .body
+        ?.drinks
+        ?.first()
+
+        ?: throw IOException("Could not retrieve a random drink from $cocktailDbApiRandomDrinkUrl")
+}
+
+
 @Controller
 @RequestMapping("/random-drink")
 class RandomDrinkController(
@@ -34,31 +45,28 @@ class RandomDrinkController(
 ) {
 
     @GetMapping
-    fun getRandomDrinkInfo(model: Model): Drink {
+    fun getRandomDrinkInfo(model: Model) {
 
         // get data for 1 random drink (from thecocktaildb.com)
-        val randomDrink = restTemplate
-            .getForEntity(cocktailDbApiRandomDrinkUrl, CocktailDbRecord::class.java)
-            .body
-            ?.drinks
-            ?.first()
+        val randomDrink = getRandomDrink(restTemplate)
 
         // get the name celebrated today (from svatkyapi.cz)
-        val nameCelebratedToday = restTemplate
+        val nameCelebratedToday = getNameCelebratedToday()
+
+        // pass obtained data to a HTML template
+        model.addAttribute("strDrink", randomDrink.strDrink)
+        model.addAttribute("strInstructions", randomDrink.strInstructions)
+        model.addAttribute("strDrinkThumb", randomDrink.strDrinkThumb)
+        model.addAttribute("namedayPhrase", "$nameCelebratedToday celebrates today... Cheers!")
+    }
+
+
+    private fun getNameCelebratedToday(): String {
+        return restTemplate
             .getForEntity(nameDaysApiTodayUrl, Nameday::class.java)
             .body
             ?.name
 
-        // pass obtained data to a HTML template
-        model.addAttribute("strDrink", randomDrink?.strDrink)
-        model.addAttribute("strInstructions", randomDrink?.strInstructions)
-        model.addAttribute("strDrinkThumb", randomDrink?.strDrinkThumb)
-        model.addAttribute("namedayPhrase", nameCelebratedToday + " celebrates today... Cheers!")
-
-        return randomDrink
-            ?: throw IOException("Could not retrieve a random drink from $cocktailDbApiRandomDrinkUrl")
+            ?: throw IOException("Could not retrieve a random drink from $nameDaysApiTodayUrl")
     }
 }
-
-
-

@@ -11,10 +11,7 @@ EXAMPLE USE: "/drink-of-the-day/2023/09/13"
 
 package com.example.cocktail_proxy.controller
 
-import com.example.cocktail_proxy.cocktailDbApiRandomDrinkUrl
 import com.example.cocktail_proxy.datasource.DrinksOfTheDayRepository
-import com.example.cocktail_proxy.model.CocktailDbRecord
-import com.example.cocktail_proxy.model.Drink
 import com.example.cocktail_proxy.model.DrinkOfTheDay
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.client.RestTemplate
-import java.io.IOException
 import java.time.LocalDate
 
 
@@ -42,12 +38,14 @@ class DrinkOfTheDayController(
         @PathVariable day: Int
     ): DrinkOfTheDay {
 
+        // casting to LocalDate is performed for date validation
         val date = LocalDate.of(year, month, day).toString()
+
         var drinkOfTheDay = drinksOfTheDayRepository.findByDate(date)
 
         return if (drinkOfTheDay != null) drinkOfTheDay
         else {
-            val randomDrink = getRandomDrink()
+            val randomDrink = getRandomDrink(restTemplate)
             drinkOfTheDay = DrinkOfTheDay(
                 date = date,
                 idDrink = randomDrink.idDrink,
@@ -61,14 +59,4 @@ class DrinkOfTheDayController(
         }
     }
 
-    // retrieves data for 1 random drink (from thecocktaildb.com)
-    internal fun getRandomDrink(): Drink {
-        return restTemplate
-            .getForEntity(cocktailDbApiRandomDrinkUrl, CocktailDbRecord::class.java)
-            .body
-            ?.drinks
-            ?.first()
-
-            ?: throw IOException("Could not retrieve a random drink from $cocktailDbApiRandomDrinkUrl")
-    }
 }
