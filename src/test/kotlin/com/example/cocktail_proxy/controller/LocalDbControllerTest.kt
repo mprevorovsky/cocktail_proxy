@@ -32,7 +32,7 @@ class LocalDbControllerTest {
             DrinkJpaCompatible(2, "drink2")))
 
         // when/then
-        mockMvc.get("/local_db/")
+        mockMvc.get("/local-db")
             .andExpect {
                 status { isOk() }
                 content { contentType(MediaType.APPLICATION_JSON) }
