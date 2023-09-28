@@ -1,5 +1,5 @@
 /*
-Controller for the endpoint "/local_db/"
+Controller for the endpoint "/local-db"
 
 Returns all currently available drink data from the local in-memory DB as JSON.
  */
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/local_db/")
+@RequestMapping("/local-db")
 class LocalDbController(
     private val drinkRepository: DrinksRepository
 ) {

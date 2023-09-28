@@ -1,5 +1,5 @@
 /*
-Controller for the endpoint "/proxy/"
+Controller for the endpoint "/proxy"
 
 All GET requests to this endpoint are just redirected to the CocktailDB.
 The path and any query strings are extracted and passed on to the CocktailDB API.
@@ -11,6 +11,8 @@ to allow for better testability of the code and to provide modularity for potent
 future changes of the application logic.
 
 Also, server-side HTTP errors are handled by this controller.
+
+EXAMPLE USE: /proxy/filter.php?g=Champagne_flute
 */
 
 
@@ -28,7 +30,7 @@ import java.io.IOException
 
 
 @RestController
-@RequestMapping("/proxy/")
+@RequestMapping("/proxy")
 class CocktailDbProxyController(
     private val httpRequest: HttpServletRequest,
     private val service: ProxyService

@@ -1,5 +1,5 @@
 /*
-Controller for the endpoint "/random_drink/"
+Controller for the endpoint "/random-drink"
 
 A mini all-in-one controller for retrieving brief info on a random drink from
 www.thecocktaildb.com/api/json/v1/1/random.php
@@ -28,7 +28,7 @@ import java.io.IOException
 
 
 @Controller
-@RequestMapping("/random_drink/")
+@RequestMapping("/random-drink")
 class RandomDrinkController(
     private val restTemplate: RestTemplate,
 ) {
