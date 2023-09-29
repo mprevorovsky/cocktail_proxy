@@ -14,7 +14,7 @@ class CustomErrorControllerTest {
     private lateinit var restTemplate: TestRestTemplate
 
     @Test
-    fun `should call trigger error message from CustomErrorController`() {
+    fun `should trigger error message from CustomErrorController`() {
         // given
         val nonExistingLocalUri = "/foo"
 
