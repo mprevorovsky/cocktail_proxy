@@ -57,7 +57,7 @@ class RandomDrinkController(
         model.addAttribute("strDrink", randomDrink.strDrink)
         model.addAttribute("strInstructions", randomDrink.strInstructions)
         model.addAttribute("strDrinkThumb", randomDrink.strDrinkThumb)
-        model.addAttribute("namedayPhrase", "$nameCelebratedToday celebrates today... Cheers!")
+        model.addAttribute("nameDayPhrase", "$nameCelebratedToday celebrates today... Cheers!")
     }
 
 

@@ -4,7 +4,7 @@ The application is linked to two REST APIs:
 
 1) the CocktailDB API (documentation at https://www.thecocktaildb.com/api.php) - a database of drinks.
 
-2) Svátky API (documentation at https://svatkyapi.cz/) - a nameday database.
+2) Svátky API (documentation at https://svatkyapi.cz/) - a name day database.
 
 
 The application provides 4 endpoints:
@@ -53,9 +53,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.cache.annotation.EnableCaching
 
-
+/**
+ * Base URL for all CocktailDB API calls.
+ */
 const val cocktailDbApiBaseUrl: String = "https://www.thecocktaildb.com/api/json/v1/1/"
+
+/**
+ * URL of the CocktailDB resource that returns a random drink.
+ */
 const val cocktailDbApiRandomDrinkUrl: String = "https://www.thecocktaildb.com/api/json/v1/1/random.php"
+
+/**
+ * URL of the Svátky API (= name days) which returns information for the current date,
+ * including the currently celebrated name.
+ */
 const val nameDaysApiTodayUrl: String = "https://svatkyapi.cz/api/day"
 
 
