@@ -13,4 +13,8 @@ import org.springframework.data.repository.CrudRepository
 interface DrinksRepository: CrudRepository<DrinkJpaCompatible, Long>
 {
     fun existsByIdDrink(idDrink: Int): Boolean
+
+    fun findByDate(date: String): DrinkJpaCompatible?
+
+    fun findByIdDrink(idDrink: Int): DrinkJpaCompatible?
 }
