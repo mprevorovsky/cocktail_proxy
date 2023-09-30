@@ -1,14 +1,10 @@
 package com.example.cocktail_proxy.controller
 
-import com.example.cocktail_proxy.model.NameDay
-import com.example.cocktail_proxy.nameDaysApiTodayUrl
-import com.example.cocktail_proxy.utils.getRandomDrinkFromCocktailDb
+import com.example.cocktail_proxy.service.RandomDrinkService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.client.RestTemplate
-import java.io.IOException
 
 
 /**
@@ -28,35 +24,9 @@ import java.io.IOException
 @Controller
 @RequestMapping("/random-drink")
 class RandomDrinkController(
-    private val restTemplate: RestTemplate,
+    private val randomDrinkService: RandomDrinkService,
 ) {
 
     @GetMapping
-    fun getRandomDrinkInfo(model: Model) {
-
-        // get data for 1 random drink (from thecocktaildb.com)
-        val randomDrink = getRandomDrinkFromCocktailDb(restTemplate)
-
-        // get the name celebrated today (from svatkyapi.cz)
-        val nameCelebratedToday = getNameCelebratedToday()
-
-        // pass obtained data to a HTML template
-        model.addAttribute("strDrink", randomDrink.strDrink)
-        model.addAttribute("strInstructions", randomDrink.strInstructions)
-        model.addAttribute("strDrinkThumb", randomDrink.strDrinkThumb)
-        model.addAttribute("nameDayPhrase", "$nameCelebratedToday celebrates today... Cheers!")
-    }
-
-
-    /**
-     * Retrieves the currently celebrated name from Svátky API.
-     */
-    private fun getNameCelebratedToday(): String {
-        return restTemplate
-            .getForEntity(nameDaysApiTodayUrl, NameDay::class.java)
-            .body
-            ?.name
-
-            ?: throw IOException("Could not retrieve a random drink from $nameDaysApiTodayUrl")
-    }
+    fun getRandomDrinkAndCelebratedName(model: Model) = randomDrinkService.getRandomDrinkAndCelebratedName(model)
 }
