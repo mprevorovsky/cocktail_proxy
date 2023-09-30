@@ -15,7 +15,7 @@ import org.springframework.test.annotation.DirtiesContext
 import org.springframework.web.client.RestTemplate
 
 @SpringBootTest
-class DrinkOfTheDayServiceTest{
+class DrinkOfTheDayServiceTest {
 
     @Autowired
     lateinit var drinksRepository: DrinksRepository

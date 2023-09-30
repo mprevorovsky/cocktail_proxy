@@ -1,7 +1,7 @@
 package com.example.cocktail_proxy.service
 
 import com.example.cocktail_proxy.datasource.DrinksRepository
-import com.example.cocktail_proxy.model.Drink
+import com.example.cocktail_proxy.model.DrinkJpaCompatible
 import com.example.cocktail_proxy.model.NameDay
 import com.example.cocktail_proxy.nameDaysApiTodayUrl
 import com.example.cocktail_proxy.utils.getRandomDrinkFromCocktailDb
@@ -38,13 +38,13 @@ class RandomDrinkService(
         model.addAttribute("strDrinkThumb", randomDrink.strDrinkThumb)
         model.addAttribute("nameDayPhrase", "$nameCelebratedToday celebrates today... Cheers!")
 
-        saveDrinkDataIfNotExists(randomDrink)
+        saveDrinkDataIfNotExists(randomDrink.toDrinkJpaCompatible())
     }
 
     /**
      * Retrieves the currently celebrated name from Svátky API.
      */
-    private fun getNameCelebratedToday(): String {
+    internal fun getNameCelebratedToday(): String {
         return restTemplate
             .getForEntity(nameDaysApiTodayUrl, NameDay::class.java)
             .body
@@ -56,8 +56,8 @@ class RandomDrinkService(
     /**
      * Saves new drink data to the local in-memory DB.
      */
-    internal fun saveDrinkDataIfNotExists(drink: Drink) {
+    internal fun saveDrinkDataIfNotExists(drink: DrinkJpaCompatible) {
         if (!drinksLocalRepository.existsByIdDrink(drink.idDrink))
-            drinksLocalRepository.save(drink.toDrinkJpaCompatible())
+            drinksLocalRepository.save(drink)
     }
 }

@@ -17,7 +17,7 @@ class RandomDrinkControllerTest {
 
     @Test
     @DirtiesContext
-    fun `should return random drink from CocktailDB`() {
+    fun `should return random drink and name day HTML page`() {
         // when/then
         mockMvc.get("/random-drink")
             .andExpect {
