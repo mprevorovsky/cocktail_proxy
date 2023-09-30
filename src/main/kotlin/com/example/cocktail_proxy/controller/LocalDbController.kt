@@ -1,9 +1,3 @@
-/*
-Controller for the endpoint "/local-db"
-
-Returns all currently available drink data from the local in-memory DB as JSON.
- */
-
 package com.example.cocktail_proxy.controller
 
 import com.example.cocktail_proxy.datasource.DrinksRepository
@@ -12,6 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * Controller for the endpoint "/local-db"
+ *
+ * Returns all currently available drink data from the local in-memory DB as JSON.
+ */
 @RestController
 @RequestMapping("/local-db")
 class LocalDbController(

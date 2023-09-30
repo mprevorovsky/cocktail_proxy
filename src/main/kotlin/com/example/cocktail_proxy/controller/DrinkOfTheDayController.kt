@@ -29,7 +29,9 @@ class DrinkOfTheDayController(
     private val drinkOfTheDayService: DrinkOfTheDayService
 ) {
 
-    // attempt to access invalid date paths trigger this error
+    /**
+     * Handles exceptions triggered by attempting to access invalid date paths.
+     */
     @ExceptionHandler(DateTimeException::class)
     fun handleInvalidDatePath(e: DateTimeException): ResponseEntity<String> =
         ResponseEntity(e.message, HttpStatus.BAD_REQUEST)

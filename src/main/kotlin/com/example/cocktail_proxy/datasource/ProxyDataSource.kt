@@ -1,9 +1,3 @@
-/*
-Repository layer for accessing the CocktailDB API.
-
-URI elements supplied by upstream layers are turned into a final URI and a GET request is performed.
- */
-
 package com.example.cocktail_proxy.datasource
 
 import com.example.cocktail_proxy.model.CocktailDbRecord
@@ -13,12 +7,22 @@ import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import java.io.IOException
 
+/**
+ * Repository layer for accessing the CocktailDB API.
+ *
+ * URI elements supplied by upstream layers are turned into a final URI and a GET request is performed.
+ */
 @Repository
 class ProxyDataSource(
     private val restTemplate: RestTemplate
 ) : DataSource {
 
-    // Requests to the "random.php" path are not cached to preserve the random character of the responses.
+    /**
+     * Retrieves data from the CocktailDB.
+     *
+     * Requests to the "random.php" path are not cached to preserve the random character of the responses.
+     * All other requests are cached.
+     */
     @Cacheable("cocktailDb", condition = "#consumedApiPath!='random.php'")
     override fun performProxyGetRequest(
         consumedApiBaseUrl: String,
@@ -33,7 +37,9 @@ class ProxyDataSource(
     }
 
 
-    // Builds URI from base URL, path and an optional query string.
+    /**
+     * Builds URI from base URL, path and an optional query string.
+     */
     internal fun buildRequestUri(
         consumedApiBaseUrl: String,
         consumedApiPath: String,

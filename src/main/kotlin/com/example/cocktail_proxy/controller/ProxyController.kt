@@ -1,21 +1,3 @@
-/*
-Controller for the endpoint "/proxy"
-
-All GET requests to this endpoint are just redirected to the CocktailDB.
-The path and any query strings are extracted and passed on to the CocktailDB API.
-
-The whole functionality downstream of the controller is split between:
-- Service layer (ProxyService class)
-- Repository layer (ProxyDataSource class)
-to allow for better testability of the code and to provide modularity for potential
-future changes of the application logic.
-
-Also, server-side HTTP errors are handled by this controller.
-
-EXAMPLE USE: /proxy/filter.php?g=Champagne_flute
-*/
-
-
 package com.example.cocktail_proxy.controller
 
 import com.example.cocktail_proxy.cocktailDbApiBaseUrl
@@ -28,7 +10,22 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.HttpClientErrorException
 import java.io.IOException
 
-
+/**
+ * Controller for the endpoint "/proxy"
+ *
+ * All GET requests to this endpoint are just redirected to the CocktailDB.
+ * The path and any query strings are extracted and passed on to the CocktailDB API.
+ *
+ * The whole functionality downstream of the controller is split between:
+ * - Service layer (ProxyService class)
+ * - Repository layer (ProxyDataSource class)
+ * to allow for better testability of the code and to provide modularity for potential
+ * future changes of the application logic.
+ *
+ * Also, server-side HTTP errors are handled by this controller.
+ *
+ * EXAMPLE USE: /proxy/filter.php?g=Champagne_flute
+*/
 @RestController
 @RequestMapping("/proxy")
 class CocktailDbProxyController(
@@ -36,12 +33,18 @@ class CocktailDbProxyController(
     private val service: ProxyService
 ) {
 
-    // requests to non-existing paths at the CocktailDB trigger this error
+    /**
+     * Handles exceptions triggered by requests to non-existing paths at the CocktailDB.
+     */
     @ExceptionHandler(HttpClientErrorException::class)
     fun handleUriNotFound(e: HttpClientErrorException): ResponseEntity<String> =
         ResponseEntity(e.message, HttpStatus.NOT_FOUND)
 
-    // requests to the CocktailDB with malformed URI (typically the query string) trigger this error
+
+    /**
+     * Handles exceptions triggered by requests to the CocktailDB with malformed URI
+     * (typically the query string).
+     */
     @ExceptionHandler(IOException::class)
     fun handleNoDataCouldBeReadFromUri(e: IOException): ResponseEntity<String> =
         ResponseEntity(e.message, HttpStatus.BAD_REQUEST)

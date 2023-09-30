@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate
  * If no such record exists yet, a random drink is fetched from www.thecocktaildb.com/api/json/v1/1/random.php,
  * mapped on a DrinkJpaCompatible object, associated with the date, saved to the local in-memory DB and returned as JSON.
  * In case of duplicity (fetched random drink already exists in the local DB, but is not yet associated with
- *any date), the existing drink record is just updated (date property).
+ * any date), the existing drink record is just updated (date property).
  */
 @Service
 class DrinkOfTheDayService(

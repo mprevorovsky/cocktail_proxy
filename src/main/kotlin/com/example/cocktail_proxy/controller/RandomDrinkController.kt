@@ -1,23 +1,9 @@
-/*
-Controller for the endpoint "/random-drink"
-
-A mini all-in-one controller for retrieving brief info on a random drink from
-www.thecocktaildb.com/api/json/v1/1/random.php
-and serving selected drink attributes as an HTML page using a Thymeleaf template.
-
-For simplicity, this endpoint does not implement any Service or Repository layers,
-but yes, now the controller does too many different things...
-Also, no automated tests are currently available for this controller
-(but has been tested manually).
-*/
-
-
 package com.example.cocktail_proxy.controller
 
 import com.example.cocktail_proxy.cocktailDbApiRandomDrinkUrl
 import com.example.cocktail_proxy.model.CocktailDbRecord
 import com.example.cocktail_proxy.model.Drink
-import com.example.cocktail_proxy.model.Nameday
+import com.example.cocktail_proxy.model.NameDay
 import com.example.cocktail_proxy.nameDaysApiTodayUrl
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -27,6 +13,9 @@ import org.springframework.web.client.RestTemplate
 import java.io.IOException
 
 
+/**
+ * Retrieves data for a random drink from the CocktailDB.
+ */
 fun getRandomDrink(restTemplate: RestTemplate): Drink {
     return restTemplate
         .getForEntity(cocktailDbApiRandomDrinkUrl, CocktailDbRecord::class.java)
@@ -38,6 +27,20 @@ fun getRandomDrink(restTemplate: RestTemplate): Drink {
 }
 
 
+/**
+ * Controller for the endpoint "/random-drink"
+ *
+ * A mini all-in-one controller for retrieving brief info on a random drink from
+ * www.thecocktaildb.com/api/json/v1/1/random.php
+ * and the currently celebrated name from Svátky API.
+ * Selected drink attributes and the celebrated name are then served as an HTML page using
+ * a Thymeleaf template.
+ *
+ * For simplicity, this endpoint does not implement any Service or Repository layers,
+ * but yes, now the controller does too many different things...
+ * Also, no automated tests are currently available for this controller
+ * (but has been tested manually).
+*/
 @Controller
 @RequestMapping("/random-drink")
 class RandomDrinkController(
@@ -61,9 +64,12 @@ class RandomDrinkController(
     }
 
 
+    /**
+     * Retrieves the currently celebrated name from Svátky API.
+     */
     private fun getNameCelebratedToday(): String {
         return restTemplate
-            .getForEntity(nameDaysApiTodayUrl, Nameday::class.java)
+            .getForEntity(nameDaysApiTodayUrl, NameDay::class.java)
             .body
             ?.name
 
