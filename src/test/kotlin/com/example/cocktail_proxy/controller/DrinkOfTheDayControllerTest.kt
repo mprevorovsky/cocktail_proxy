@@ -41,4 +41,18 @@ class DrinkOfTheDayControllerTest {
                 jsonPath("$.[0].date") { value(date) }
             }
     }
+
+    @Test
+    fun `should trigger error when invalid date path is accessed`() {
+        // given
+        val year = "2023"
+        val invalidMonth = "13"
+        val day = "12"
+
+        // when/then
+        mockMvc.get("/drink-of-the-day/$year/$invalidMonth/$day")
+            .andExpect {
+                status { isBadRequest() }
+            }
+    }
 }
