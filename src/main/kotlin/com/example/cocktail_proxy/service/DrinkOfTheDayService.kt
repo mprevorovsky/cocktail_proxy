@@ -1,8 +1,8 @@
 package com.example.cocktail_proxy.service
 
-import com.example.cocktail_proxy.controller.getRandomDrink
 import com.example.cocktail_proxy.datasource.DrinksRepository
 import com.example.cocktail_proxy.model.DrinkJpaCompatible
+import com.example.cocktail_proxy.utils.getRandomDrinkFromCocktailDb
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 
@@ -32,7 +32,7 @@ class DrinkOfTheDayService(
 
         return if (drinkOfTheDay != null) drinkOfTheDay
         else {
-            val randomDrink = getRandomDrink(restTemplate)
+            val randomDrink = getRandomDrinkFromCocktailDb(restTemplate)
             drinkOfTheDay = DrinkJpaCompatible(
                 date = date,
                 idDrink = randomDrink.idDrink,
@@ -52,4 +52,3 @@ class DrinkOfTheDayService(
         }
     }
 }
-//TODO tests

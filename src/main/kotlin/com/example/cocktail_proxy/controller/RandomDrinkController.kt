@@ -1,30 +1,14 @@
 package com.example.cocktail_proxy.controller
 
-import com.example.cocktail_proxy.cocktailDbApiRandomDrinkUrl
-import com.example.cocktail_proxy.model.CocktailDbRecord
-import com.example.cocktail_proxy.model.Drink
 import com.example.cocktail_proxy.model.NameDay
 import com.example.cocktail_proxy.nameDaysApiTodayUrl
+import com.example.cocktail_proxy.utils.getRandomDrinkFromCocktailDb
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.client.RestTemplate
 import java.io.IOException
-
-
-/**
- * Retrieves data for a random drink from the CocktailDB.
- */
-fun getRandomDrink(restTemplate: RestTemplate): Drink {
-    return restTemplate
-        .getForEntity(cocktailDbApiRandomDrinkUrl, CocktailDbRecord::class.java)
-        .body
-        ?.drinks
-        ?.first()
-
-        ?: throw IOException("Could not retrieve a random drink from $cocktailDbApiRandomDrinkUrl")
-}
 
 
 /**
@@ -51,7 +35,7 @@ class RandomDrinkController(
     fun getRandomDrinkInfo(model: Model) {
 
         // get data for 1 random drink (from thecocktaildb.com)
-        val randomDrink = getRandomDrink(restTemplate)
+        val randomDrink = getRandomDrinkFromCocktailDb(restTemplate)
 
         // get the name celebrated today (from svatkyapi.cz)
         val nameCelebratedToday = getNameCelebratedToday()
