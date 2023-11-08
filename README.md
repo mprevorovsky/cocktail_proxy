@@ -33,7 +33,7 @@
 
    The results are presented as a simple webpage (Thymeleaf template).
 
-   *NOTE: no data are saved to the local in-memory DB when this endpoint is accessed.*
+   Any new drink data are saved to the local in-memory DB.
 
 3) **"/local-db"** - retrieves all drink records stored in the local in-memory H2 database.
 
