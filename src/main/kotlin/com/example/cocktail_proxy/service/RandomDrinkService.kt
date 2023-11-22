@@ -32,7 +32,7 @@ class RandomDrinkService(
         // get the name celebrated today (from svatkyapi.cz)
         val nameCelebratedToday = getNameCelebratedToday()
 
-        // pass obtained data to a HTML template
+        // pass obtained data to an HTML template
         model.addAttribute("strDrink", randomDrink.strDrink)
         model.addAttribute("strInstructions", randomDrink.strInstructions)
         model.addAttribute("strDrinkThumb", randomDrink.strDrinkThumb)

@@ -7,7 +7,7 @@ import jakarta.persistence.Id
 /**
  * Data Transfer Object class used for interaction with the Jakarta Persistence API.
  *
- * Intended to extract a subset of Drink-related attributes from CocktailDBRecord and make
+ * Intended to extract a subset of Drink-related attributes from CocktailDbRecord and make
  * the data object suitable for interaction with the Jakarta Persistence API.
  *
  * The optional date property is used by the "drink-of-the-day" endpoint to associate the
