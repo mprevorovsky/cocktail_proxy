@@ -1,4 +1,4 @@
-## *NOTE: This is a learning/demo Kotlin project*
+## *NOTE: This is a demo Kotlin/SpringBoot project*
 
 ## The CocktailDb proxy application is linked to two REST APIs:
 
@@ -8,7 +8,7 @@
 
 
 ## The application provides 4 endpoints:
-1) **"/proxy"** - redirects *all* calls (all paths and queries) to the remote CocktailDB API and return the results
+1) **"/proxy"** - redirects *all* calls (all paths and queries) to the remote CocktailDB API and returns the results
    as JSON data.
 
    The free public part of the CocktailDB API only provides GET endpoints, which all retrieve information
